@@ -62,3 +62,42 @@ if __name__ == "__main__":
     print("Find 45:", simple_search(numbers, 45))
     print("Find 100:", simple_search(numbers, 100))
     print("Find all occurrences of 45:", simple_search_all(numbers, 45))
+
+""" Output:
+
+Array in main: [10, 5, 23, 7, 45, 2, 45]
+Array: [10, 5, 23, 7, 45, 2, 45]
+Target: 45
+Starting linear search...
+Checking index: 0, value: 10
+Checking index: 1, value: 5
+Checking index: 2, value: 23
+Checking index: 3, value: 7
+Checking index: 4, value: 45
+Find 45: 4
+
+Array: [10, 5, 23, 7, 45, 2, 45]
+Target: 100
+Starting linear search...
+Checking index: 0, value: 10
+Checking index: 1, value: 5
+Checking index: 2, value: 23
+Checking index: 3, value: 7
+Checking index: 4, value: 45
+Checking index: 5, value: 2
+Checking index: 6, value: 45
+Find 100: -1
+
+Array: [10, 5, 23, 7, 45, 2, 45]
+Target: 45
+Starting linear search for all occurrences...
+Checking index: 0, value: 10
+Checking index: 1, value: 5
+Checking index: 2, value: 23
+Checking index: 3, value: 7
+Checking index: 4, value: 45
+Checking index: 5, value: 2
+Checking index: 6, value: 45
+Find all occurrences of 45: [4, 6]
+
+"""
