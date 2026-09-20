@@ -5,6 +5,7 @@ Quick reference for core Java syntax and fundamentals, with Python equivalents s
 ## Contents
  
 - [Syntax Quick Reference](#syntax-quick-reference)
+- [Commonly Used Functions](#commonly-used-functions)
 1. [Program Structure](#1-program-structure)
 2. [Primitive Types & Variables](#2-primitive-types--variables)
 3. [Operators & Control Flow](#3-operators--control-flow)
@@ -38,10 +39,13 @@ The one table to scan when a declaration slips your mind mid-problem — every o
 | string | `String s = "hi";` | `s = "hi"` |
 | array / list | `int[] arr = {1, 2, 3};` | `arr = [1, 2, 3]` |
 | 2D array / list | `int[][] g = new int[3][3];` | `g = [[0]*3 for _ in range(3)]` |
+| typed list | `List<String> names = new ArrayList<>();` | `names = []` (no type needed) |
 | map / dict | `Map<String,Integer> m = new HashMap<>();` | `m = {}` |
 | set | `Set<Integer> s = new HashSet<>();` | `s = set()` |
 | class | `public class Foo { }` | `class Foo:` |
+| field / instance variable | `private int x;` (declared in class body) | `self.x = x` (created inside `__init__`, no pre-declaration) |
 | constructor | `public Foo(int x) { this.x = x; }` | `def __init__(self, x): self.x = x` |
+| object (instance) | `Foo obj = new Foo(x);` | `obj = Foo(x)` (no `new` keyword) |
 | subclass | `class Dog extends Animal { }` | `class Dog(Animal):` |
 | method / function | `public int add(int a, int b) { return a+b; }` | `def add(a, b): return a + b` |
 | static method | `static int add(int a, int b) { ... }` | `@staticmethod`<br>`def add(a, b): ...` |
@@ -51,6 +55,64 @@ The one table to scan when a declaration slips your mind mid-problem — every o
 | enum | `enum Day { MON, TUE }` | `class Day(Enum): MON = 1` |
 | exception class | `class FooError extends RuntimeException { }` | `class FooError(Exception):` |
 | lambda | `(a, b) -> a + b` | `lambda a, b: a + b` |
+ 
+---
+ 
+## Commonly Used Functions
+ 
+The everyday toolbox — math, strings, arrays/lists, and maps/sets — gathered in one scan instead of spread across sections.
+ 
+**I/O & type**
+ 
+| Task | Java | Python |
+|---|---|---|
+| print | `System.out.println(x);` | `print(x)` |
+| to string | `String.valueOf(x)` | `str(x)` |
+| parse number | `Integer.parseInt(s)` / `Double.parseDouble(s)` | `int(s)` / `float(s)` |
+| type check | `x instanceof String` | `isinstance(x, str)` |
+ 
+**Math**
+ 
+| Task | Java | Python |
+|---|---|---|
+| min / max | `Math.min(a,b)` / `Math.max(a,b)` | `min(a,b)` / `max(a,b)` |
+| absolute value | `Math.abs(x)` | `abs(x)` |
+| power | `Math.pow(b, e)` | `b ** e` / `pow(b, e)` |
+| square root | `Math.sqrt(x)` | `math.sqrt(x)` |
+| round | `Math.round(x)` | `round(x)` |
+| random int | `new Random().nextInt(n)` | `random.randint(0, n-1)` |
+ 
+**String**
+ 
+| Task | Java | Python |
+|---|---|---|
+| length | `s.length()` | `len(s)` |
+| upper / lower | `s.toUpperCase()` / `s.toLowerCase()` | `s.upper()` / `s.lower()` |
+| contains | `s.contains(sub)` | `sub in s` |
+| index of | `s.indexOf(sub)` | `s.find(sub)` |
+| replace | `s.replace(a, b)` | `s.replace(a, b)` |
+| starts / ends with | `s.startsWith(p)` / `s.endsWith(p)` | `s.startswith(p)` / `s.endswith(p)` |
+| char at index | `s.charAt(i)` | `s[i]` |
+ 
+**Array / List**
+ 
+| Task | Java | Python |
+|---|---|---|
+| length | `arr.length` / `list.size()` | `len(list_)` |
+| sort | `Arrays.sort(arr)` / `Collections.sort(list)` | `list_.sort()` / `sorted(list_)` |
+| reverse | `Collections.reverse(list)` | `list_.reverse()` / `list_[::-1]` |
+| contains | `list.contains(x)` | `x in list_` |
+| add / remove | `list.add(x)` / `list.remove(x)` | `list_.append(x)` / `list_.remove(x)` |
+| max / min / sum | `Collections.max(list)` / `.min(list)` | `max(list_)` / `min(list_)` / `sum(list_)` |
+| copy | `new ArrayList<>(list)` | `list_.copy()` / `list_[:]` |
+ 
+**Map / Set**
+ 
+| Task | Java | Python |
+|---|---|---|
+| contains key | `map.containsKey(k)` | `k in dict_` |
+| get with default | `map.getOrDefault(k, def)` | `dict_.get(k, def)` |
+| keys / values / entries | `map.keySet()` / `.values()` / `.entrySet()` | `dict_.keys()` / `.values()` / `.items()` |
  
 ---
  
