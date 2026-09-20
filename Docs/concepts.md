@@ -1,4 +1,4 @@
-# Interview Q&A
+# Interview Conceptual Q&A
  
 A reference of interview questions and answers spanning Java/OOP fundamentals through senior/staff-level system design, security, observability, DevOps, and process topics. Each answer includes a plain-English translation underneath the technical points.
  
