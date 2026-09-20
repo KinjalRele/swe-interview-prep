@@ -8,7 +8,8 @@ A reference of interview questions and answers spanning Java/OOP fundamentals th
 - [Backend & System Design](#backend--system-design) (18)
 - [Availability & Latency](#availability--latency) (14)
 - [Node.js, Retries & Resilience](#nodejs-retries--resilience) (3)
-- [Spring, Microservices & Testing](#spring-microservices--testing) (10)
+- [AI & ML Concepts](#ai--ml-concepts) (10)
+- [Spring, Microservices & Testing](#spring-microservices--testing) (11)
 - [Docker, Kubernetes & CI/CD](#docker-kubernetes--cicd) (6)
 - [GraphQL vs REST](#graphql-vs-rest) (3)
 - [SQL & Databases](#sql--databases) (6)
@@ -354,6 +355,82 @@ A reference of interview questions and answers spanning Java/OOP fundamentals th
  
 ---
  
+## AI & ML Concepts
+ 
+**Q: What is a machine learning model, and what's the difference between training and inference?**
+ 
+- A model is a function whose internal parameters were learned from data, rather than hand-written by a programmer, to map inputs to outputs (e.g. an image to a label, a prompt to the next token)
+- **Training** — feeding the model data and adjusting its parameters (typically via gradient descent) to reduce error against known correct answers
+- **Inference** — using an already-trained, frozen model to make predictions on new input; no further learning happens at this stage
+*In plain English: Training is teaching the model by showing it lots of examples and correcting its mistakes. Inference is just asking the now-trained model a question and getting an answer — it isn't learning anymore at that point.*
+ 
+**Q: Supervised vs unsupervised learning — what's the difference?**
+ 
+- **Supervised** — the training data comes with labeled correct answers (e.g. emails marked spam/not-spam); the model learns to map input to that known output
+- **Unsupervised** — the data has no labels; the model finds structure on its own (clustering similar items, reducing dimensions, spotting anomalies)
+- Reinforcement learning is a third category — an agent learns by taking actions and getting reward/penalty signals, rather than from labeled examples
+*In plain English: Supervised: you show it examples with the right answers attached and it learns the pattern. Unsupervised: you just hand it data with no answers and it finds patterns or groupings on its own.*
+ 
+**Q: What is overfitting, and how do you prevent it?**
+ 
+- Overfitting is when a model learns the training data too specifically — including its noise and quirks — so it performs great on training data but poorly on new, unseen data
+- Detected by tracking performance on a held-out validation set separate from training data — a growing gap between training and validation performance is the tell
+- Mitigated with more/varied training data, regularization (penalizing overly complex models), dropout, early stopping, or a simpler model
+*In plain English: The model basically memorized the practice questions instead of actually learning the subject — so it aces the practice test but struggles with anything slightly different on the real one.*
+ 
+**Q: How do you use AI coding tools like GitHub Copilot or Claude effectively in your day-to-day workflow?**
+ 
+- Treat suggestions as a fast first draft, not a final answer — always review generated code for correctness, security issues, and whether it actually fits the existing codebase's patterns before accepting it
+- They're strongest for boilerplate, repetitive patterns, writing tests against existing code, and explaining unfamiliar code — weaker on business-logic decisions that need context the tool doesn't have
+- Giving better context (relevant open files, clear comments/instructions about intent) produces meaningfully better suggestions than a bare prompt
+- Worth being able to speak to in an interview: it speeds up the mechanical parts of coding, but you're still accountable for understanding and reviewing everything that ships
+*In plain English: Use it like a fast, eager junior partner — great for cranking out the repetitive stuff and a first pass, but you still read and understand everything before it goes in, because you're the one accountable for it.*
+ 
+**Q: What are tokens and embeddings, in the context of LLMs?**
+ 
+- **Tokens** — the chunks (often sub-word pieces, not whole words) that text gets split into before a model processes it; models are priced and limited by token count, not character or word count
+- **Embeddings** — a numeric vector representation of a token, word, or piece of text, positioned in space so that semantically similar things end up near each other
+- Embeddings are what make things like semantic search possible — comparing vectors to find meaning-similar content, not just exact keyword matches
+*In plain English: Tokens are the bite-sized pieces text gets chopped into so the model can process it. Embeddings turn words or text into a list of numbers positioned so that similar meanings end up close together — which is how "car" and "automobile" can be recognized as related even with no shared letters.*
+ 
+**Q: What is prompt engineering, and why does it matter?**
+ 
+- The practice of structuring the instructions/context given to an LLM to reliably get the output you actually want
+- Techniques include giving clear, specific instructions, providing examples of the desired output (few-shot prompting), and asking the model to reason step by step before answering
+- Matters because the exact same underlying model can produce noticeably better or worse results depending on how the request is framed — it's often cheaper than fine-tuning for improving output quality
+*In plain English: How you ask matters almost as much as what you ask — a clear, specific, well-structured prompt gets a noticeably better answer out of the same model than a vague one.*
+ 
+**Q: What is RAG (retrieval-augmented generation), and what problem does it solve?**
+ 
+- Before generating a response, the system retrieves relevant documents/data (usually via a vector/embedding search) and feeds them into the model's context alongside the user's question
+- Solves two problems at once: the model's training data is frozen and can go stale, and the model may not know anything about your private/internal data — RAG lets it answer using current, specific, or proprietary information it was never trained on
+- Reduces (but doesn't eliminate) hallucination, since the model has real source material to ground its answer in rather than relying purely on what it memorized during training
+*In plain English: Instead of relying only on what the model memorized during training, you hand it the actual relevant documents right before asking the question — like giving someone the reference material before a test instead of expecting them to have it all memorized.*
+ 
+**Q: What is a hallucination in the context of LLMs, and how do you mitigate it?**
+ 
+- A hallucination is when a model generates output that's fluent and confident-sounding but factually wrong or entirely made up (a fake API method, a citation that doesn't exist)
+- Happens because the model is fundamentally predicting plausible next tokens, not looking up verified facts — it has no built-in way to know what it doesn't know
+- Mitigated with RAG (grounding answers in real retrieved data), asking the model to cite sources, lower temperature/randomness for factual tasks, and — critically — human review for anything high-stakes
+*In plain English: Sometimes the model confidently makes something up that sounds completely plausible but isn't true — because it's predicting what sounds right, not looking anything up. Always double-check anything factual or high-stakes it tells you.*
+ 
+**Q: What is a context window, and why does it matter?**
+ 
+- The maximum amount of text (measured in tokens) a model can consider at once — including the prompt, any provided documents/history, and the response it generates
+- Content beyond the window gets truncated or dropped entirely — the model literally cannot see it, so a conversation or document that's too long can cause it to "forget" earlier details
+- Matters for system design: a larger context window costs more per call and often runs slower, so real systems balance window size against cost/latency, and use techniques like RAG or summarization rather than dumping everything in
+*In plain English: Think of it as the model's short-term memory span — anything that doesn't fit gets forgotten. Bigger memory costs more and can be slower, so you design around feeding it only what it actually needs.*
+ 
+**Q: What do you need to consider when designing a system that serves an AI/ML feature (e.g. calling an LLM API)?**
+ 
+- Latency — model calls are much slower than a typical DB/API call (often seconds, not milliseconds), so design for that: streaming responses, async processing, or a loading state rather than blocking the whole request
+- Cost — usage-based pricing per token adds up fast at scale; cache repeated/similar requests where possible instead of re-calling the model for the same thing
+- Reliability — treat the model provider like any external dependency: timeouts, retries with backoff, and a fallback path for when it's slow or down
+- Evaluation — unlike deterministic code, output quality needs ongoing measurement (spot-checking outputs, tracking user feedback/corrections, regression-testing prompts) since the same prompt can produce subtly different results over time or across model versions
+*In plain English: Treat the AI call like a slow, occasionally-unreliable, pay-per-use external service: plan for it being slow, plan for it costing money every time, have a backup plan if it fails, and keep checking that its answers are actually still good.*
+ 
+---
+ 
 ## Spring, Microservices & Testing
  
 **Q: What's the difference between Spring and Spring Boot?**
@@ -413,6 +490,13 @@ A reference of interview questions and answers spanning Java/OOP fundamentals th
 - **Mock** — a fake object that also records how it was called, so you can verify interactions afterward
 - `when(...).thenReturn(...)` sets up stubbed behavior; `verify(...)` checks mock interactions
 *In plain English: A stub just gives a fake answer when asked. A mock does that too, but also remembers how it was used, so you can double-check later.*
+ 
+**Q: What is a test harness, and how is it different from a testing framework?**
+ 
+- A test harness is the surrounding infrastructure that runs tests against a system: it sets up the environment/inputs, drives the code under test, captures the outputs, and compares them against expected results — the scaffolding around the tests, not the tests themselves
+- A testing framework (JUnit, TestNG) gives you the syntax/annotations to write individual test cases; the harness is the broader machinery that can include test runners, stub/mock data, fixtures, and reporting that ties many tests together into a repeatable run
+- Especially relevant for automated/CI test suites and hardware- or integration-heavy testing, where you need a consistent, repeatable way to set up state, run a batch of tests unattended, and collect results
+*In plain English: The testing framework is the language you write individual tests in. The test harness is everything around it — the setup, the fake data, the runner — that actually executes a whole batch of tests automatically and reports back what passed and failed.*
  
 **Q: What makes a good code review, beyond just checking that it works?**
  
